@@ -53,8 +53,9 @@ def main(args):
         preds = preds.reshape(-1, mel_dim)
     preds = preds.transpose(0, 1).unsqueeze(0)
     np.save(os.path.join(args.mel_path, f"{song}.npy"), preds.numpy())
+    os.chdir('hifi-gan')
     subprocess.call(
-        f"cd hifi-gan; python inference_e2e.py --checkpoint_file {args.hifi_gan} --output_dir ../{save_path}",
+        f"python inference_e2e.py --checkpoint_file {args.hifi_gan} --output_dir ../{save_path}",
         shell=True,
     )
 

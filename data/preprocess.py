@@ -74,7 +74,8 @@ def align(
     min_note: int,
 ):
     """align phonemes with notes and expand to mel-spectrogram length"""
-    assert len(phonemes) == len(note_sequence), print("midi lyrics mismatch")
+    diff_len = len(phonemes) - len(note_sequence)
+    assert len(phonemes) == len(note_sequence), print(f"midi lyrics mismatch :{diff_len}")
     expanded_text = torch.zeros(total_length)
     expanded_notes = torch.zeros(total_length)
     for (phoneme, event) in zip(phonemes, note_sequence):
@@ -127,9 +128,11 @@ def get_note_sequence(
     note_sequence = []
     midi_file = mido.MidiFile(midi_path)
     track = find_track(midi_file.tracks)
+    print(len(midi_file.tracks))
     tempo = get_tempo(track)
     unit = tick2milisecond(tempo, midi_file.ticks_per_beat)
     for message in track:
+        print(message)
         pointer += message.time
         event = message.type
         if event == "note_on" and message.velocity != 0:
