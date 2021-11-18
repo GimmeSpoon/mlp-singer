@@ -128,11 +128,11 @@ def get_note_sequence(
     note_sequence = []
     midi_file = mido.MidiFile(midi_path)
     track = find_track(midi_file.tracks)
-    print(len(midi_file.tracks))
+    #print(len(midi_file.tracks))
     tempo = get_tempo(track)
     unit = tick2milisecond(tempo, midi_file.ticks_per_beat)
     for message in track:
-        print(message)
+        #print(message)
         pointer += message.time
         event = message.type
         if event == "note_on" and message.velocity != 0:
