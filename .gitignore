@@ -135,3 +135,10 @@ cython_debug/
 media
 staticfiles
 /tags
+
+# Dataset and Pretrained model
+data/bin
+data/raw
+hifi-gan/config.json
+hifi-gan/do_02500000
+hifi-gan/g_02500000
