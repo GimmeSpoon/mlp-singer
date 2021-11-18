@@ -3,6 +3,9 @@
 dummy/
 logs/
 
+data/raw/*
+hifi-gan/
+
 # Byte-compiled / optimized / DLL files
 */__pycache__/
 *.py[cod]
