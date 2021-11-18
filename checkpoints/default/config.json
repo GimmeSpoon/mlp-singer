@@ -1,6 +1,5 @@
 {
     "model": {
-        "type": "MLPMixer",
         "num_pitch": 26,
         "d_pitch": 32,
         "num_phone": 47,
@@ -12,13 +11,13 @@
         "dropout": 0.5
     },
     "data": {
-        "train_batch_size": 448,
-        "valid_batch_size": 896,
+        "train_batch_size": 384,
+        "valid_batch_size": 768,
         "num_workers": 5,
         "chunk_size": 192,
-        "data_path": "/home/shared/TTS_corpus/korean_singing/bin"
+        "data_path": "data/bin"
     },
-    "name": "mixer_longseq",
+    "name": "default",
     "device": "cuda",
     "patience": 5,
     "num_epochs": 100,
