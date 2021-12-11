@@ -139,9 +139,11 @@ media
 staticfiles
 /tags
 
-# Dataset and Pretrained model
+# Dataset and Pretrained model, and configuration files
 data/bin
 data/raw
+checkpoints
+configs
 hifi-gan/config.json
 hifi-gan/do_02500000
 hifi-gan/g_02500000

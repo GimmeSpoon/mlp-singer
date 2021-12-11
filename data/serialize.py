@@ -20,10 +20,17 @@ def main(args):
         os.mkdir(bin_path)
         for mode in ("train", "valid"):
             os.mkdir(os.path.join(bin_path, mode))
-    data_path = os.path.join("data", "raw")
-    midi_root = os.path.join(data_path, "mid")
-    text_root = os.path.join(data_path, "txt")
-    wav_root = os.path.join(data_path, "wav")
+
+    if args.mid_path:
+        midi_root = args.mid_path
+        text_root = args.txt_path
+        wav_root = args.wav_path
+    else:
+        data_path = os.path.join("data", "raw")
+        midi_root = os.path.join(data_path, "mid")
+        text_root = os.path.join(data_path, "txt")
+        wav_root = os.path.join(data_path, "wav")
+        
     midi_list = os.listdir(midi_root)
     midi_list.sort()
     for midi_file in tqdm(midi_list):
@@ -49,5 +56,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config_path", type=str, default=os.path.join("configs", "preprocess.json")
     )
+
+    parser.add_argument("--mid_path", type=str)
+    parser.add_argument("--txt_path", type=str)
+    parser.add_argument("--wav_path", type=str)
     args = parser.parse_args()
     main(args)

@@ -26,10 +26,16 @@ def main(args):
     mel_dim = preprocessor_config.n_mel_channels
     song = args.song
     data_path = args.data_path
-    notes, phonemes = preprocessor.prepare_inference(
-        os.path.join(data_path, "mid", f"{song}.mid"),
-        os.path.join(data_path, "txt", f"{song}.txt"),
-    )
+    if args.mid_path:
+        notes, phonemes = preprocessor.prepare_inference(
+            args.mid_path,
+            args.txt_path,
+        )
+    else:
+        notes, phonemes = preprocessor.prepare_inference(
+            os.path.join(data_path, "mid", f"{song}.mid"),
+            os.path.join(data_path, "txt", f"{song}.txt"),
+        )
     chunk_size = model.seq_len
     preds = []
     total_len = len(notes)
@@ -55,11 +61,11 @@ def main(args):
     np.save(os.path.join(args.mel_path, f"{song}.npy"), preds.numpy())
     os.chdir('hifi-gan')
     subprocess.call(
-        f"python inference_e2e.py --checkpoint_file {args.hifi_gan} --output_dir ../{save_path}",
+        f"python inference_e2e.py --input_mel {song} --checkpoint_file {args.hifi_gan} --output_dir ../{save_path}",
         shell=True,
     )
 
-
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--device", type=str, default="cpu", help="device to use")
@@ -97,6 +103,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "--song", type=str, default="little_star", help="song to infer on"
     )
+
+    parser.add_argument("--mid_path", type=str)
+    parser.add_argument("--txt_path", type=str)
+
     args = parser.parse_args()
     set_seed()
     main(args)
